@@ -1,0 +1,114 @@
+// Spatial indexing schema for 3D BIM models
+
+// 3D Vector
+table Vec3 {
+  x: float;
+  y: float;
+  z: float;
+}
+
+// Axis-aligned bounding box
+table BoundingBox {
+  min: Vec3;
+  max: Vec3;
+  center: Vec3;
+  diagonal: float;  // Length of diagonal for quick size estimation
+}
+
+// Octree node for spatial partitioning
+table OctreeNode {
+  id: uint32;
+  level: uint8;
+  bounds: BoundingBox;
+  // Child node IDs (8 children for octree, 0 means no child)
+  children: [uint32];  // Always length 8
+  // Entity express IDs in this node (only for leaf nodes)
+  entities: [uint32];
+  entity_count: uint32;
+  is_leaf: bool;
+  // Morton code for this node's position
+  morton_code: uint64;
+}
+
+// Spatial index metadata
+table SpatialIndex {
+  root_node_id: uint32;
+  total_nodes: uint32;
+  total_entities: uint32;
+  max_depth: uint8;
+  leaf_node_count: uint32;
+  non_empty_leaf_count: uint32;
+  // Target entities per leaf
+  entities_per_leaf: uint16 = 100;
+  // Overall bounds of the model
+  bounds: BoundingBox;
+  // Creation timestamp
+  created_at: uint64;
+  version: uint32 = 1;
+}
+
+// Complete octree structure
+table Octree {
+  metadata: SpatialIndex;
+  nodes: [OctreeNode];
+  // Optional: Entity location index for fast lookup
+  entity_locations: [EntityLocation];
+}
+
+// Maps entity to its octree node
+table EntityLocation {
+  entity_id: uint32;
+  node_id: uint32;
+  // Optional: exact position
+  position: Vec3;
+}
+
+// Query types for spatial searches
+enum QueryType: byte {
+  BOUNDING_BOX = 0,
+  SPHERE = 1,
+  FRUSTUM = 2,
+  RAY = 3,
+  NEAREST_K = 4
+}
+
+// Spatial query parameters
+table SpatialQuery {
+  query_type: QueryType;
+  // For bounding box queries
+  box_min: Vec3;
+  box_max: Vec3;
+  // For sphere queries
+  center: Vec3;
+  radius: float;
+  // For ray queries
+  origin: Vec3;
+  direction: Vec3;
+  max_distance: float;
+  // For k-nearest queries
+  k: uint32;
+  // Filter by entity types
+  entity_types: [string];
+  // Maximum results
+  max_results: uint32 = 1000;
+}
+
+// Query result
+table SpatialQueryResult {
+  query: SpatialQuery;
+  entity_ids: [uint32];
+  distances: [float];  // Optional: distances for nearest queries
+  nodes_visited: uint32;
+  time_ms: float;
+}
+
+// Chunk spatial metadata
+table ChunkSpatialInfo {
+  chunk_id: string;
+  bounds: BoundingBox;
+  entity_count: uint32;
+  octree_nodes: [uint32];  // Which octree nodes overlap this chunk
+  priority: float;  // For loading priority
+}
+
+root_type Octree;

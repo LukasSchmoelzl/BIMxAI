@@ -1,0 +1,62 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import '@/styles/typography.css';
+@import '@/styles/spacing.css';
+@import '@/styles/effects.css';
+@import '@/styles/layout-variables.css';
+@import '@/styles/color-palette.css';
+@import '@/styles/bento-layout.css';
+@import '@/styles/main.css';
+@import '@/styles/chat-message.css';
+@import '@/styles/feature-components.css';
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer base {
+    html {
+    -webkit-text-size-adjust: 100%;
+    -moz-text-size-adjust: 100%;
+    text-size-adjust: 100%;
+  }
+  /* Fix page height and disable body scrolling; app handles internal scrolls */
+  html, body { height: 100dvh; }
+  @supports not (height: 100dvh) {
+    html, body { height: 100vh; }
+  }
+  body { overflow: hidden; }
+    ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.5);
+  }
+    ::selection {
+    background: rgba(59, 130, 246, 0.3);
+    color: white;
+  }
+    *:focus {
+    outline: 2px solid var(--focus-ring);
+    outline-offset: 2px;
+  }
+    html {
+    scroll-behavior: smooth;
+  }
+    body {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+}
+* {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+}

@@ -1,0 +1,45 @@
+// Fragment schema for BIM viewer
+namespace BIM.Fragment;
+
+table Vec3 {
+  x: float;
+  y: float;
+  z: float;
+}
+
+table BoundingBox {
+  min: Vec3;
+  max: Vec3;
+}
+
+table Property {
+  key: string;
+  value: string;
+  type: string; // "number", "string", "boolean"
+}
+
+table Entity {
+  express_id: uint32;
+  type: string;
+  name: string;
+  global_id: string;
+  properties: [Property];
+  geometry_id: uint32;
+}
+
+table EntityIndexEntry {
+  type: string;
+  ids: [uint32];
+}
+
+table Fragment {
+  id: string;
+  name: string;
+  entities: [Entity];
+  bounding_box: BoundingBox;
+  entity_index: [EntityIndexEntry];
+  version: uint32 = 1;
+  created_at: uint64;
+}
+
+root_type Fragment;

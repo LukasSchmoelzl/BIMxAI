@@ -1,0 +1,130 @@
+:root {
+    --app-main-height: calc(100dvh - var(--footer-height));
+  --bento-header-height: clamp(8%, 10cqi, 10%);
+  --bento-content-height: 80%;
+  --bento-input-height: 10%;
+    --bento-outer-padding: 1rem;
+  --bento-inner-padding: 1rem;
+  --bento-border-width: 2px;
+  --bento-border-color: var(--border-light);
+  --bento-border-radius: 1rem;
+  --bento-bg: var(--bg-secondary);
+  --bento-shadow: 0 4px 12px var(--shadow-color), 0 0 0 1px var(--border-light);
+    --resizer-width: 4px;
+  --resizer-height: 4px;
+  --resizer-z-index: 1000;
+  --resizer-bg: var(--surface-glass);
+  --resizer-border: var(--border-light);
+  --resizer-hover-bg: var(--surface-glass-strong);
+  --resizer-min-header-height: 5%;
+  --resizer-max-header-height: 20%;
+  --resizer-min-left-width: 20%;
+  --resizer-max-left-width: 80%;
+  --resizer-default-left-width: 70%;
+  --resizer-min-chat-content-height: 30%;
+  --resizer-max-chat-content-height: 90%;
+  --bento-area-padding: clamp(0.5rem, 1.2cqi, 1rem);
+  --bento-area-border-radius: 8px;
+  --bento-area-transition: 0.3s ease;
+  --bento-area-shadow: 0 2px 8px var(--shadow-color);
+  --bento-area-glass-bg: var(--surface-glass);
+  --bento-area-glass-border: var(--border-light);
+  --bento-area-glass-blur: blur(10px);
+    --resize-handle-width: 4px;
+  --resize-handle-height: 4px;
+  --resize-handle-bg: var(--surface-glass);
+  --resize-handle-hover-bg: var(--surface-glass-strong);
+  --resize-handle-active-bg: var(--surface-glass-strong);
+  --resize-handle-border-radius: 2px;
+  --resize-handle-transition: 0.2s ease;
+  --resize-handle-z-index: 1000;
+    --bento-button-padding: 0.75rem 1rem;
+  --bento-button-border-radius: 6px;
+  --bento-button-transition: 0.2s ease;
+  --bento-button-bg: var(--surface-glass);
+  --bento-button-hover-bg: var(--surface-glass-strong);
+  --bento-button-active-bg: var(--hover-overlay);
+  --bento-button-border: var(--border-light);
+  --bento-button-text-color: var(--text-white);
+    --standard-button-padding: clamp(0.25rem, 0.8cqi, 0.5rem) clamp(0.5rem, 1.2cqi, 0.875rem);
+  --standard-button-border-radius: 6px;
+  --standard-button-transition: 0.15s ease;
+  --standard-button-primary-bg: var(--color-primary);
+  --standard-button-primary-hover-bg: var(--color-primary-dark);
+  --standard-button-secondary-bg: var(--surface-glass);
+  --standard-button-secondary-hover-bg: var(--surface-glass-strong);
+    --modal-bg: var(--shadow-color-dark);
+  --modal-content-bg: var(--surface-primary);
+  --modal-border-radius: 12px;
+  --modal-padding: 1.5rem;
+  --modal-shadow: 0 20px 25px -5px var(--shadow-color), 0 10px 10px -5px var(--shadow-color);
+  --modal-backdrop-blur: blur(8px);
+  --modal-backdrop-bg: var(--shadow-color-dark);
+  --modal-backdrop-z-index: 1000;
+    --rate-limit-bg: var(--chat-error-bg);
+  --rate-limit-border: var(--border-error);
+  --rate-limit-text: var(--color-error);
+  --rate-limit-border-radius: 6px;
+  --rate-limit-padding: 0.5rem 0.75rem;
+    --card-bg: var(--surface-glass);
+  --card-border: var(--border-light);
+  --card-border-radius: 8px;
+  --card-padding: 1rem;
+  --card-shadow: 0 2px 8px var(--shadow-color);
+  --card-transition: 0.2s ease;
+    --progress-bg: var(--surface-glass);
+  --progress-fill-bg: var(--color-primary);
+  --progress-height: 4px;
+  --progress-border-radius: 2px;
+  --progress-transition: 0.3s ease;
+    --bim-container-min-height: 400px;
+  --bim-container-border-radius: 8px;
+  --bim-container-transition: 0.3s ease;
+  --bim-container-shadow: 0 0 20px var(--shadow-color), 0 0 40px var(--shadow-color);
+  --bim-container-shadow-inset: inset 0 0 0 1px var(--shadow-color);
+  --bim-container-bg-secondary: var(--bim-bg-secondary);
+  --bim-container-bg-paper: var(--bim-bg-paper);
+  --bim-container-surface-dark-glass: var(--surface-dark-glass);
+  --bim-container-info: var(--bim-info);
+    --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+    --footer-height: 32px;
+    --chat-message-margin: 12px 0;
+  --chat-message-max-width: 80%;
+  --chat-message-padding: 12px 16px;
+  --chat-message-border-radius: 12px;
+  --chat-message-shadow: 0 2px 4px var(--chat-shadow);
+  --chat-input-padding: var(--spacing-md);
+  --chat-frame-margin: 0.5rem;
+  --chat-frame-padding: 0.75rem;
+  --chat-opposite-padding: calc(var(--spacing-md) * 2);
+  /* deprecated chat variables removed */
+    --duration-fast: 150ms;
+  --duration-normal: 300ms;
+  --duration-slow: 500ms;
+  --duration-slower: 700ms;
+}
+@media (min-width: 640px) {
+  :root {
+    --bento-header-height: 8%;
+    --bento-content-height: 84%;
+    --bento-input-height: 8%;
+  }
+}
+@media (min-width: 768px) {
+  :root {
+    --bento-header-height: 7%;
+    --bento-content-height: 86%;
+    --bento-input-height: 7%;
+  }
+}
+@media (min-width: 1024px) {
+  :root {
+    --bento-header-height: 6%;
+    --bento-content-height: 88%;
+    --bento-input-height: 6%;
+  }
+}

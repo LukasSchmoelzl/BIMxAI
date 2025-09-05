@@ -1,0 +1,51 @@
+:root {
+  --color-primary: #667eea;
+  --color-primary-dark: #5a67d8;
+  --color-secondary: #764ba2;
+  --color-accent: #f093fb;
+  --color-success: #4ade80;
+  --color-error: #f87171;
+  --color-info: #60a5fa;
+  --text-primary: #111827;
+  --text-secondary: #6b7280;
+  --text-white: #ffffff;
+  --text-muted: #9ca3af;
+  --bg-primary: #ffffff;
+  --bg-secondary: #f9fafb;
+  --bg-tertiary: #f3f4f6;
+  --bg-quaternary: #e5e7eb;
+  --surface-glass: rgba(255, 255, 255, 0.1);
+  --surface-glass-strong: rgba(255, 255, 255, 0.2);
+  --surface-dark-glass: rgba(0, 0, 0, 0.1);
+  --surface-primary: rgba(255, 255, 255, 0.95);
+  --brand-gradient: linear-gradient(135deg, var(--color-primary) 0%, var(--color-secondary) 100%);
+  /* Chat gradient overlay controls */
+  --chat-gradient-strength: 18%;
+  --chat-glass-bg: rgba(255, 255, 255, 0.08);
+  --chat-gradient: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--color-primary) var(--chat-gradient-strength), transparent) 0%,
+    color-mix(in srgb, var(--color-secondary) var(--chat-gradient-strength), transparent) 100%
+  );
+  --border-light: rgba(255, 255, 255, 0.2);
+  --border-dark: rgba(0, 0, 0, 0.1);
+  --border-primary: var(--color-primary);
+  --border-error: var(--color-error);
+  --shadow-color: rgba(0, 0, 0, 0.1);
+  --shadow-color-dark: rgba(0, 0, 0, 0.2);
+  --hover-overlay: rgba(255, 255, 255, 0.1);
+  --focus-ring: rgba(102, 126, 234, 0.3);
+  --bim-highlight: #FFD700;
+  --resize-handle-bg: var(--surface-glass);
+  --resize-handle-border: var(--border-light);
+  --resize-handle-hover-bg: var(--surface-glass-strong);
+  --bim-brand-primary: var(--color-primary);
+  --bim-info: var(--color-info);
+  --bim-bg-secondary: #f5f4f2;
+  --bim-bg-paper: #f9f8f6;
+  --bim-surface-primary: var(--surface-primary);
+  --chat-shadow: var(--shadow-color);
+  --chat-error-bg: rgba(239, 68, 68, 0.1);
+}
+/* Dark mode placeholder removed to avoid empty ruleset warning */
+/* Removed unused utility classes (.text-*, .bg-*) to reduce CSS surface. */

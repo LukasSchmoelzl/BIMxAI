@@ -1,0 +1,215 @@
+.chat-input-container {
+  height: auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: var(--spacing-md);
+}
+
+.chat-input-form {
+  display: flex;
+  gap: var(--spacing-sm);
+  height: auto;
+}
+
+.chat-input-wrapper {
+  flex: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+
+.chat-textarea {
+  flex: 1;
+  width: 100%;
+  padding: var(--chat-input-padding);
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius-lg);
+  background: var(--bg-primary);
+  font-family: inherit;
+  font-size: var(--font-size-base);
+  line-height: 1.5;
+  color: var(--text-primary);
+  resize: none;
+  min-height: 60px;
+  max-height: 200px;
+  transition: all var(--transition-normal);
+}
+
+.chat-textarea:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 2px var(--focus-ring);
+}
+
+.chat-textarea::placeholder {
+  color: var(--text-secondary);
+}
+
+.chat-send-button {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-lg);
+  background: var(--brand-gradient);
+  color: var(--text-white);
+  border: none;
+  box-shadow: var(--shadow-lg);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  align-self: flex-end;
+}
+
+.chat-send-button:hover {
+  background: var(--brand-gradient);
+  box-shadow: var(--shadow-xl);
+}
+
+
+
+.chat-send-icon {
+  font-size: var(--font-size-lg);
+  color: var(--text-white);
+}
+
+/* Chat empty state styles live in src/app/chat-message.css to avoid duplication */
+
+/* Chat avatar styles live in src/app/chat-message.css to avoid conflicts */
+
+.quick-tips-container {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: var(--spacing-lg);
+}
+
+.quick-tips-card {
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-lg);
+  border: 1px solid var(--border-light);
+  overflow: hidden;
+}
+
+.quick-tips-header {
+  padding: var(--spacing-lg);
+  border-bottom: 1px solid var(--border-light);
+  background: var(--bg-primary);
+}
+
+.quick-tips-header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.quick-tips-title {
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-bold);
+  color: var(--text-primary);
+}
+
+.quick-tips-close-button {
+  background: transparent;
+  color: #000;
+  border: none;
+  padding: 0;
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.quick-tips-close-button:hover {
+  background: var(--bg-quaternary);
+  color: var(--text-white);
+}
+
+.quick-tips-content {
+  padding: var(--spacing-lg);
+  background: var(--bg-primary);
+}
+
+.quick-tips-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.quick-tips-item {
+  width: 100%;
+  text-align: left;
+  padding: var(--spacing-md);
+  border-radius: var(--radius-xl);
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-light);
+  cursor: pointer;
+}
+
+.quick-tips-item:hover {
+  background: var(--bg-tertiary);
+  border-color: var(--border-dark);
+}
+
+.quick-tips-item-content {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.quick-tips-icon {
+  font-size: var(--font-size-2xl);
+  color: var(--text-white);
+}
+
+.quick-tips-text {
+  font-weight: var(--font-weight-normal);
+  color: var(--text-primary);
+}
+
+.quick-tips-item:hover .quick-tips-text {
+  color: var(--color-primary);
+}
+
+@media (max-width: 768px) {
+  .quick-tips-container {
+    padding: var(--spacing-md);
+  }
+  .quick-tips-header {
+    padding: var(--spacing-md);
+  }
+  .quick-tips-content {
+    padding: var(--spacing-md);
+  }
+  .quick-tips-item {
+    padding: var(--spacing-sm);
+  }
+}
+
+.chat-send-button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--focus-ring);
+}
+
+.quick-tips-close-button:hover { opacity: 0.8; }
+.quick-tips-close-button:focus { outline: none; }
+
+.quick-tips-item:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--focus-ring);
+}
+
+@keyframes messageSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

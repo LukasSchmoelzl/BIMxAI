@@ -1,0 +1,186 @@
+.app-main {
+  flex: 1;
+  display: grid;
+  grid-template-areas:
+    "header header"
+    "background chat-content"
+    "background chat-input";
+  grid-template-columns: var(--resizer-default-left-width) calc(100% - var(--resizer-default-left-width));
+  grid-template-rows: var(--bento-header-height) var(--bento-content-height) var(--bento-input-height);
+  height: var(--app-main-height);
+  width: calc(100% - var(--bento-outer-padding) * 2);
+  gap: 0;
+  margin: var(--bento-outer-padding);
+  padding: 0; /* viewer/background can be flush */
+  background: var(--bento-bg);
+  border-radius: var(--bento-border-radius);
+  box-shadow: var(--bento-shadow);
+  position: relative;
+  z-index: 1;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+
+/* Base layering helpers for areas */
+.layout-content {
+  position: relative;
+  z-index: 2;
+  /* Allow children to shrink and scroll internally in flex/grid */
+  min-height: 0;
+}
+
+.layout-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  pointer-events: none;
+}
+.app-main.bento-bordered {
+    background: var(--surface-glass);
+  backdrop-filter: var(--bento-area-glass-blur);
+}
+.app-main.resizable {
+    grid-template-columns: var(--bento-grid-columns, var(--resizer-default-left-width) calc(100% - var(--resizer-default-left-width)));
+  grid-template-rows: var(--bento-grid-rows, var(--bento-header-height) var(--bento-content-height) var(--bento-input-height));
+}
+.app-main.resizable.dragging {
+  cursor: grabbing;
+}
+.resize-handle {
+  position: absolute;
+  z-index: var(--resize-handle-z-index, 50);
+  transition: var(--resize-handle-transition, opacity 0.2s ease);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--resize-handle-bg, transparent);
+  opacity: 0;
+}
+.resize-handle:hover {
+  opacity: 1;
+}
+.app-main.dragging .resize-handle {
+  opacity: 1;
+}
+.resize-indicator {
+  border-radius: var(--resize-handle-border-radius, 2px);
+  background-color: var(--color-primary);
+  transition: var(--resize-handle-transition, all 0.2s ease);
+}
+.resize-handle-horizontal .resize-indicator {
+  width: 2px;
+  height: 40px;
+}
+.resize-handle-vertical .resize-indicator {
+  height: 2px;
+  width: 40px;
+}
+.resize-handle:hover .resize-indicator {
+  background-color: var(--resize-handle-hover-bg, var(--color-accent));
+  transform: scale(1.2);
+}
+
+/* ===== GRID AREA ASSIGNMENTS ===== */
+.area-header {
+  grid-area: header;
+  background:
+    var(--chat-gradient),
+    var(--chat-glass-bg);
+  backdrop-filter: blur(20px);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  /* Apply same spacing rhythm as chat frame */
+  margin: var(--chat-frame-margin);
+  padding: var(--chat-frame-padding);
+  /* Provide header spacing variable to children */
+  --header-pad: var(--chat-frame-padding);
+  /* Center content vertically inside the header row */
+  display: flex;
+  align-items: center;
+  box-sizing: border-box;
+  overflow: hidden; /* ensure rounded corners clip children */
+  container-type: size;
+  /* Prevent children's absolute fills from exceeding rounded corners */
+  position: relative;
+  /* Guarantee enough block-size at 1080p so text and badges fit */
+  min-block-size: clamp(44px, 7cqb, 64px);
+}
+
+.area-background {
+  grid-area: background;
+  /* Span the entire grid (incl. header) so header floats above */
+  grid-column: 1 / -1;
+  grid-row: 1 / -1;
+  position: relative;
+  z-index: 0; /* Background layer */
+}
+
+.area-chat-content {
+  grid-area: chat-content;
+}
+
+.area-chat-input {
+  grid-area: chat-input;
+}
+
+/* Entity overlay should float above and not capture events */
+.area-entity-overlay {
+  grid-area: background;
+}
+
+/* Frame that wraps chat-content and chat-input visually */
+.area-chat-frame {
+  grid-column: 2 / 3;
+  grid-row: 2 / 4;
+  /* Match header-frame visual style */
+  background:
+    var(--chat-gradient),
+    var(--chat-glass-bg);
+  backdrop-filter: blur(20px);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  margin: var(--chat-frame-margin);
+  padding: var(--chat-frame-padding);
+  pointer-events: none; /* never steal interactions from chat */
+  z-index: 1;
+  /* Allow internal sections to shrink and scroll without growing the page */
+  min-height: 0;
+  overflow: hidden;
+}
+/* Inner wrapper to layout content+input */
+.chat-wrapper {
+  display: grid;
+  grid-template-rows: 1fr auto;
+  gap: var(--chat-frame-padding);
+  height: 100%;
+  pointer-events: auto; /* allow interactions inside */
+  /* Ensure grid children can shrink and enable internal scrolling */
+  min-height: 0;
+}
+.area-chat-content,
+.area-chat-input {
+  position: relative;
+  z-index: 2;
+}
+/* Content area must allow its child to handle scrolling */
+.area-chat-content {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+}
+/* Chat-specific styles are defined in src/app/chat-message.css to avoid duplication */
+/* Remove vertical margins to prevent the row from growing; spacing comes from grid gap */
+.area-chat-content,
+.area-chat-input {
+  margin: 0;
+}
+/* Optional: horizontal padding inside the content area if needed */
+.chat-messages-content { padding-left: var(--chat-frame-padding); padding-right: var(--chat-frame-padding); }
+
+@media (max-width: 1200px) {
+  .app-main {
+    grid-template-columns: 50% 50%;
+  }
+}
+/* Mobile styles temporarily disabled per request */

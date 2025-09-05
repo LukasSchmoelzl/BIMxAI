@@ -1,0 +1,178 @@
+.chat-messages-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+}
+.chat-messages-scroll {
+  flex: 1;
+  overflow: auto; /* scroll within chat content, not the page */
+  min-height: 0;
+}
+
+/* Fallback hard cap to avoid growth if percentage chain misbehaves */
+.area-chat-frame .chat-messages-scroll {
+  max-height: calc(100dvh - var(--footer-height) - 180px);
+  overflow-y: auto;
+}
+.chat-messages-content {
+  padding: var(--spacing-md);
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+.chat-message-item {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  gap: var(--spacing-sm);
+  margin: var(--chat-message-margin);
+  animation: fadeIn 0.3s ease-in-out;
+}
+.chat-message-item.assistant,
+.chat-message-item.error {
+  flex-direction: row; /* icon left, content right */
+}
+.chat-message-item.user {
+  flex-direction: row-reverse; /* icon right, content left */
+}
+.chat-message-avatar {
+  flex-shrink: 0;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  background: transparent;
+  border: 1px solid var(--border-color);
+  margin: 0;
+}
+
+.chat-message-item.assistant .chat-message-avatar,
+.chat-message-item.error .chat-message-avatar {
+  margin-right: var(--spacing-sm);
+}
+.chat-message-item.user .chat-message-avatar {
+  margin-left: var(--spacing-sm);
+}
+.chat-avatar.user {
+  background: var(--primary-color);
+  color: var(--primary-foreground);
+}
+.chat-avatar.assistant {
+  background: var(--accent-color);
+  color: var(--accent-foreground);
+}
+.chat-avatar.error {
+  background: var(--destructive-color);
+  color: var(--destructive-foreground);
+}
+.chat-message-content {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  max-width: var(--chat-message-max-width);
+  align-items: flex-start;
+}
+
+/* Assistant messages: left-aligned, extra padding on right */
+.chat-message-item.assistant .chat-message-content,
+.chat-message-item.error .chat-message-content {
+  align-items: flex-start;
+  margin-left: 0;
+  margin-right: var(--chat-opposite-padding);
+}
+
+/* User messages: right-aligned visually by pushing bubble left with extra left padding */
+.chat-message-item.user .chat-message-content {
+  align-items: flex-start;
+  margin-left: var(--chat-opposite-padding);
+  margin-right: 0;
+}
+.chat-message-bubble {
+  background: var(--bg-primary);
+  padding: var(--chat-message-padding);
+  border-radius: var(--chat-message-border-radius);
+  box-shadow: var(--chat-message-shadow);
+  border: 1px solid var(--border-light);
+  word-wrap: break-word;
+  max-width: 100%;
+}
+.chat-message-item.user .chat-message-bubble,
+.chat-message-item.assistant .chat-message-bubble {
+  background: var(--bg-primary);
+  color: var(--text-primary);
+  border-color: var(--border-light);
+}
+.chat-message-item.error .chat-message-bubble {
+  background: var(--destructive-color);
+  color: var(--destructive-foreground);
+  border-color: var(--destructive-color);
+}
+.chat-message-bubble p {
+  margin: 0;
+  line-height: 1.5;
+  white-space: pre-wrap;
+}
+.chat-message-timestamp {
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  opacity: 0.7;
+}
+.chat-message-item.user .chat-message-timestamp {
+  text-align: right;
+}
+.chat-message-item.assistant .chat-message-timestamp {
+  text-align: left;
+}
+.chat-message-item.error .chat-message-timestamp {
+  text-align: left;
+}
+.chat-empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  padding: var(--spacing-xl);
+  text-align: center;
+  color: var(--text-muted);
+}
+.chat-empty-icon {
+  font-size: 48px;
+  margin-bottom: var(--spacing-md);
+  opacity: 0.5;
+}
+.chat-empty-title {
+  font-size: var(--text-lg);
+  font-weight: var(--font-semibold);
+  margin: 0 0 var(--spacing-sm) 0;
+  color: var(--text-primary);
+}
+.chat-empty-subtitle {
+  font-size: var(--text-sm);
+  margin: 0;
+  opacity: 0.7;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+@media (max-width: 640px) {
+  .chat-message-bubble {
+    padding: var(--spacing-sm) var(--spacing-md);
+  }
+  .chat-message-avatar {
+    width: 28px;
+    height: 28px;
+    font-size: 12px;
+  }
+}

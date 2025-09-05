@@ -1,0 +1,59 @@
+// Chunk Management Schema for Dynamic Loading
+
+include "spatial.fbs";
+
+enum CompressionType : byte {
+  None = 0,
+  Gzip = 1,
+  Brotli = 2
+}
+
+table TypeCount {
+  entity_type: string;
+  count: uint32;
+}
+
+table ChunkMetadata {
+  entity_count: uint32;
+  type_histogram: [TypeCount];
+  avg_complexity: float;
+  has_geometry: bool;
+  min_express_id: uint32;
+  max_express_id: uint32;
+}
+
+table Chunk {
+  id: string;
+  spatial_bounds: BoundingBox;
+  entity_ids: [uint32];
+  entity_types: [string];
+  size_bytes: uint32;
+  compression_type: CompressionType;
+  created_at: uint64;
+  metadata: ChunkMetadata;
+  octree_node_id: uint32;  // Reference to octree node
+  data: [ubyte];           // Compressed entity data
+}
+
+table ChunkIndex {
+  chunks: [Chunk];
+  total_entities: uint32;
+  total_size: uint64;
+  created_at: uint64;
+  version: uint32 = 1;
+}
+
+table ChunkLoadRequest {
+  chunk_ids: [string];
+  priority: byte;  // 0-255, higher = more urgent
+  prefetch: bool;
+}
+
+table ChunkLoadResponse {
+  loaded_chunks: [string];
+  failed_chunks: [string];
+  memory_usage: uint64;
+  load_time_ms: uint32;
+}
+
+root_type ChunkIndex;

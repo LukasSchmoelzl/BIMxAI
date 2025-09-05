@@ -1,0 +1,86 @@
+// Binary cache schema for efficient storage
+
+enum CacheValueType: byte {
+  CLAUDE_REQUEST = 0,
+  CLAUDE_RESPONSE = 1,
+  QUERY_RESULT = 2,
+  CHUNK_DATA = 3,
+  RAW_DATA = 4
+}
+
+enum CompressionType: byte {
+  NONE = 0,
+  GZIP = 1,
+  BROTLI = 2,
+  LZ4 = 3
+}
+
+// Main cache entry
+table CacheEntry {
+  key: string;
+  value_type: CacheValueType;
+  value_data: [ubyte]; // Serialized specific type data
+  created_at: uint64;
+  expires_at: uint64;
+  hit_count: uint32 = 0;
+  size_bytes: uint32;
+  compression_type: CompressionType;
+  tags: [string];
+}
+
+// Specific data structures that get serialized into value_data
+table ClaudeRequest {
+  message: string;
+  context: string; // JSON string for flexibility
+  max_tokens: uint32;
+  temperature: float32;
+  model: string;
+  tools: [ToolDefinition];
+}
+
+table ClaudeResponse {
+  content: string;
+  tool_calls: [ToolCall];
+  final_answer: string;
+  thought: string;
+  iterations: uint32;
+  tokens_used: uint32;
+}
+
+table ToolDefinition {
+  name: string;
+  description: string;
+  parameters: string; // JSON Schema as string
+}
+
+table ToolCall {
+  tool: string;
+  parameters: string; // JSON string
+  result: string; // JSON string
+  duration_ms: uint32;
+}
+
+table QueryResult {
+  entity_type: string;
+  count: uint32;
+  express_ids: [uint32];
+  query_time_ms: uint32;
+}
+
+// Cache index for fast lookups
+table CacheIndex {
+  entries: [CacheIndexEntry];
+  total_size: uint64;
+  entry_count: uint32;
+  version: uint32 = 1;
+}
+
+table CacheIndexEntry {
+  key: string;
+  file_offset: uint64;
+  size_bytes: uint32;
+  expires_at: uint64;
+  value_type: CacheValueType;
+}
+
+root_type CacheEntry;
